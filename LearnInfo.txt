@@ -1,0 +1,26 @@
+index.html (im Ordner public/)
+Die Seite, die der Browser anzeigt. 
+Sie ist das Frontend, also alles, was du später 
+als Nutzer siehst: Überschrift, Buttons, Playlist-Eingabe.
+
+server.js
+Das Backend, der Chef des Projekts. 
+Er startet den Webserver, liefert den Ordner public/ 
+an den Browser aus und enthält die API-Routen wie /api/health. 
+Später kommen hier der Spotify-Login und das Einlesen der YouTube-Playlists rein, 
+weil geheime Schlüssel nur auf dem Server liegen dürfen.
+
+package.json
+Der Steckbrief des Projekts. Sie enthält den Namen, die Liste 
+der benötigten Pakete (express, dotenv) und die Start-Befehle 
+unter scripts. Mit dieser Datei weiß jeder Rechner, 
+auch Render, was installiert und wie gestartet wird.
+
+package-lock.json
+Die genaue Einkaufsliste. Sie hält fest, welche exakte Version 
+jedes Pakets installiert wurde, auch von den Hilfspaketen. 
+Dadurch läuft das Projekt bei dir und auf Render mit denselben 
+Versionen. Du bearbeitest sie nie selbst, npm pflegt sie automatisch.
+
+Ein Merksatz dazu: package.json sagt, was du brauchst, 
+und package-lock.json sagt, in welcher genauen Version.
