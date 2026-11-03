@@ -38,10 +38,18 @@ app.get("/api/youtube/playlist/:id", async (req, res) => {
             return res.status(response.status).json({ error: data.error?.message });
         }
 
+        // gelöschte Videos rausfiltern
+        const validItems = data.items.filter(
+            (item) => 
+                item.snippet.title !== "Deleted video" &&
+                item.snippet.title !== "Private video"
+        );
+
         // Keep only what we need later fpr the Spotify search
-        allTracks = allTracks.concat(data.items.map((item) => ({
-            title: item.snippet.title,
-            channel: item.snippet.videoOwnerChannelTitle,
+        allTracks = allTracks.concat(validItems.map((item) => ({
+            title: item.snippet.title,          // Orignal lassen für anzeigen und logs
+            artist: cleanArtist(item.snippet.videoOwnerChannelTitle),
+            variants: cleanTitleVariants(item.snippet.title),
         })));
 
         if (data.nextPageToken){

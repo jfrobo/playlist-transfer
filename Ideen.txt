@@ -1,0 +1,18 @@
+Für das Matchen der Songs:
+
+Wenn ein Song nicht durch den Orginal Titel 
+mit 1:1 gleichem Titel und Künstler gefunden 
+wurde, sondern nur ein sehr ähnliches match 
+gefunden wurde, dann soll das markiert werden
+in der Ansicht bevor man die Playlist 
+tatsächlich erstellt (also der Vorschlag 
+Playlist). 
+Allgemein soll sowie so für jeden Titel in der
+yt liste der gematchte song angezeigt werden 
+und mit verschiedener matchstatus farbe, 
+z.B. grün perfektes match, gelb sehr ähnliches
+match und rot kein passendes Match gefunden. 
+Man soll jeden Songmatch manuell bearbeiten 
+können in der Vorschau, besonders wichtig für 
+die Songs ohne Match, über eine manuelle 
+suchfunktion über spotify. 
