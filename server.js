@@ -2,6 +2,8 @@
 
 import "dotenv/config"; // liest .env ein und stellt die Werte unter process.env bereit.
 import express from "express";
+import { cleanTitleVariants } from "./utils/cleanTitleVariants.js";
+import { cleanArtist } from "./utils/cleanArtist.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
