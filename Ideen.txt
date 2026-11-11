@@ -16,3 +16,15 @@ Man soll jeden Songmatch manuell bearbeiten
 können in der Vorschau, besonders wichtig für 
 die Songs ohne Match, über eine manuelle 
 suchfunktion über spotify. 
+
+
+Das Score-System
+
+Verglichen wird immer gegen eine Titelvariante, nämlich die kürzeste (variants.at(-1), das ist die letzte der Liste). Die anderen Varianten sind nur Suchtexte. Ein Vorschlag für die Punkte:
+
+Kriterium	Punkte
+Ein Künstler des Treffers ist gleich deinem Künstler	50
+Titel ist exakt gleich	                                50
+Titel beginnt mit deinem Titel (Hello - Super Edit)	    30
+Titel enthält deinen Titel irgendwo	                    15
+Sonst	                                                0
