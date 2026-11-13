@@ -1,4 +1,4 @@
-const MIN_SCORE = 60;
+export const MIN_SCORE = 60;
 
 // Gibt einem Spotify Treffer Punkte, wie gut er zu Artist und Titel aus der Suche passt
 function scoreResTrack(spotifyTrack, artist, title) {
@@ -42,9 +42,9 @@ export function findBestMatch(resultTrackList, artist, title) {
         }
     }
 
-    if (bestScore >= MIN_SCORE)
-        return { track: best, score: bestScore};
+//    if (bestScore >= MIN_SCORE)
+//        return { track: best, score: bestScore};
 
-    return null;
+    return { track: best, score: bestScore};
 }
 
