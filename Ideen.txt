@@ -28,3 +28,10 @@ Titel ist exakt gleich	                                50
 Titel beginnt mit deinem Titel (Hello - Super Edit)	    30
 Titel enthält deinen Titel irgendwo	                    15
 Sonst	                                                0
+
+und min score zb 60
+
+nur 100 punkte als zB grüner hacken angezeigt werden und matches 
+darunter 99-60 mit gelbem haken gematsched werden und der Part 
+der abweicht in Titel und Artist bei der anzeige später rot markieren 
+bis rote schriftfarbe
