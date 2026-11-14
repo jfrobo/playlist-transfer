@@ -2,7 +2,7 @@ import { searchTracks } from "./spotifySearch.js";
 import { findBestMatch, MIN_SCORE } from "./matchTrack.js";
 
 // Sucht einen Song mit allen Titel-Varianten, bis ein guter Treffer kommt
-export async function findOnSpotify(token, artist, variants) {
+export async function findOnSpotify(token, artist, variants, onWait) {
     const compareTitle = variants.at(-1); // kürzeste variante
 
     let best = { track: null, score: 0, query: null };
@@ -10,7 +10,7 @@ export async function findOnSpotify(token, artist, variants) {
     for (const variant of variants) {
         const query = `${variant} ${artist}`;
 
-        const resTrackList = await searchTracks(token, query);
+        const resTrackList = await searchTracks(token, query, onWait);
         const bestVariantMatch = findBestMatch(resTrackList, artist, variant);
         if (bestVariantMatch.score > best.score) {
             best = {track: bestVariantMatch.track, score: bestVariantMatch.score, query: query};
