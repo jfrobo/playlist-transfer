@@ -2,8 +2,7 @@
 
 import "dotenv/config"; // liest .env ein und stellt die Werte unter process.env bereit.
 import express from "express";
-import { cleanTitleVariants } from "./utils/cleanTitleVariants.js";
-import { cleanArtist } from "./utils/cleanArtist.js";
+import { fetchYoutubePlaylist } from "./utils/youtube.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,47 +21,14 @@ app.get("/api/youtube/playlist/:id", async (req, res) => {
     const url = new URL("https://www.googleapis.com/youtube/v3/playlistItems");
     // :id im Pfad ist ein Platzhalter. Was dort in der URL steht, landet in req.params.id
 
-    url.searchParams.set("part", "snippet");
-    url.searchParams.set("playlistId", req.params.id);
-    url.searchParams.set("maxResults", "50");
-    url.searchParams.set("key", process.env.YOUTUBE_API_KEY);
-
-    let pageToken = undefined;
-    let allTracks = [];
-
-    do {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!response.ok) {
-            return res.status(response.status).json({ error: data.error?.message });
-        }
-
-        // gelöschte Videos rausfiltern
-        const validItems = data.items.filter(
-            (item) => 
-                item.snippet.title !== "Deleted video" &&
-                item.snippet.title !== "Private video"
-        );
-
-        // Keep only what we need later fpr the Spotify search
-        allTracks = allTracks.concat(validItems.map((item) => ({
-            title: item.snippet.title,          // Orignal lassen für anzeigen und logs
-            artist: cleanArtist(item.snippet.videoOwnerChannelTitle),
-            variants: cleanTitleVariants(item.snippet.title),
-        })));
-
-        if (data.nextPageToken){
-            pageToken = data.nextPageToken;
-            url.searchParams.set("pageToken", pageToken);
-            
-        } else {
-            pageToken = undefined;
-        }
-
-    } while (pageToken != undefined)
-
-    res.json({ count: allTracks.length, tracks: allTracks });
+    try {
+        const tracks = await fetchYoutubePlaylist(req.params.id);
+        res.json({ count: tracks.length, tracks });
+    } catch (error) {
+        res.status(502).json({ error: error.message });
+        // 502 Bad Gateway: "Mein Server in Ordnung, aber der Dienst, 
+        // bei dem ich nachgefragt habe, hat nicht richtig geantwortet."
+    }
 });
 
 app.listen(PORT, () => {
