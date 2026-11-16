@@ -3,6 +3,7 @@
 import "dotenv/config"; // liest .env ein und stellt die Werte unter process.env bereit.
 import express from "express";
 import { fetchYoutubePlaylist } from "./utils/youtube.js";
+import { jobs, createJob, runPreviewJob } from "./utils/previewJob.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,22 @@ app.get("/api/youtube/playlist/:id", async (req, res) => {
         // bei dem ich nachgefragt habe, hat nicht richtig geantwortet."
     }
 });
+
+// Job starten
+app.post("/api/preview/:playlistId", (req, res) => {
+    const job = createJob();
+    runPreviewJob(job, req.params.playlistId);
+    res.status(202).json({ jobId: job.id });
+});
+
+// Stand abfragen: sucht den Job und schickt seinen Zustand zurück
+app.get("/api/jobs/:id", (req, res) => {
+    const job = jobs.get(req.params.id);
+    if (!job)
+        return res.status(404).json({ error: "Job nicht gefunden" });
+    const { results, ...progress } = job;   // progess = job ohne "results"
+    res.json(job.status === "running" ? progress : job);
+})
 
 app.listen(PORT, () => {
     console.log(`Server löuft auf http://127.0.0.1:${PORT}`);
