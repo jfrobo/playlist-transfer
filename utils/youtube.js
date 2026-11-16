@@ -34,6 +34,9 @@ export async function fetchYoutubePlaylist(playlistId) {
             title: item.snippet.title,          // Orignal lassen für anzeigen und logs
             artist: cleanArtist(item.snippet.videoOwnerChannelTitle),
             variants: cleanTitleVariants(item.snippet.title),
+            thumbnail: item.snippet.thumbnails?.medium?.url ??  // ?? bedeutet nimm rechts, wenn links fehlt
+                        item.snippet.thumbnails?.default?.url,
+            videoId: item.snippet.resourceId.videoId,
         })));
 
         if (data.nextPageToken){
