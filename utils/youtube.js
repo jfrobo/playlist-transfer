@@ -19,7 +19,7 @@ export async function fetchYoutubePlaylist(playlistId) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error?.message);
+            throw new Error(data.error?.message || "YouTube-Anfrage fehlgeschlagen");
         }
 
         // gelöschte Videos rausfiltern
@@ -29,9 +29,9 @@ export async function fetchYoutubePlaylist(playlistId) {
                 item.snippet.title !== "Private video"
         );
 
-        // Keep only what we need later fpr the Spotify search
+        // Keep only what we need later for the Spotify search
         allTracks = allTracks.concat(validItems.map((item) => ({
-            title: item.snippet.title,          // Orignal lassen für anzeigen und logs
+            title: item.snippet.title,          // Orginal lassen für anzeigen und logs
             artist: cleanArtist(item.snippet.videoOwnerChannelTitle),
             variants: cleanTitleVariants(item.snippet.title),
             thumbnail: item.snippet.thumbnails?.medium?.url ??  // ?? bedeutet nimm rechts, wenn links fehlt
